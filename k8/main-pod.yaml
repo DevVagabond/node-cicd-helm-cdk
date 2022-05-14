@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-test-deployment
+  labels:
+    app: cicd-test
+spec:
+  selector:
+    matchLabels:
+      app: node-cicd
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: node-cicd
+    spec:
+      containers:
+        - name: node-cicd
+          image: node-cicd-test
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Never

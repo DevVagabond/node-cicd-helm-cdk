@@ -1,0 +1,24 @@
+image: node:16
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm install
+              - npm test
+              - cd cdk-resources
+              - npm ci
+              - npm run test
+              - npx cdk synth
+        - step:
+            name: Code linting
+            script:
+              - npm install eslint
+              - npm install aws-cdk-lib
+              - npx eslint .
+            caches:
+              - node
